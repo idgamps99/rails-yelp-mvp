@@ -7,6 +7,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/:id
   def show
     @restaurant = Restaurant.find(params[:id])
+    @reviews = Review.where(restaurant: params[:id])
   end
 
   # GET /restaurants/new
@@ -17,8 +18,11 @@ class RestaurantsController < ApplicationController
   # POST /restaurants
   def create
     @restaurant = Restaurant.new(restaurant_params)
-    @restaurant.save
-    redirect_to restaurants_path
+    if @restaurant.save
+      redirect_to restaurant_path(@restaurant)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

@@ -8,10 +8,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :restaurants, only: [:index, :create, :new, :show]
+  resources :restaurants, only: [:index, :create, :new, :show] do
+    resources :reviews, only: [:new, :create]
+  end
+
 end
 
 # restaurants    GET  /restaurants(.:format)          restaurants#index
 #                POST /restaurants(.:format)          restaurants#create
 # new_restaurant GET  /restaurants/new(.:format)      restaurants#new
 # restaurant     GET  /restaurants/:id(.:format)      restaurants#show
+
+
+# new_restaurant_review GET  /restaurants/:restaurant_id/reviews/new(.:format) reviews#new
